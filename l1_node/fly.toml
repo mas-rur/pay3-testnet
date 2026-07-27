@@ -1,1 +1,30 @@
+# Fly.io config for l1_node.
+#
+# `app` must be globally unique across all of Fly -- flyctl launch will
+# prompt you to change it if this one's taken. `primary_region` should be
+# wherever you (or your first users) actually are; "iad" = Virginia,
+# "sin" = Singapore, "fra" = Frankfurt, etc.
 
+app = "pay3-l1-testnet"
+primary_region = "iad"
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "15s"
+    method = "GET"
+    timeout = "5s"
+    path = "/health"
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
