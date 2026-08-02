@@ -23,11 +23,26 @@ export interface HistoryResponse {
   history: HistoryEvent[];
 }
 
+/**
+ * Raw transaction shape as it comes back embedded in a block (from
+ * `/chain` or `/block/:index`). Note there's no `tx_hash` field here --
+ * the node only computes that on demand (e.g. inside `/history`), it
+ * isn't part of the stored/serialized Transaction struct.
+ */
+export interface TxFields {
+  from: string;
+  to: string;
+  amount: number;
+  nonce: number;
+  pubkey: string;
+  signature: string;
+}
+
 export interface Block {
   index: number;
   timestamp: number;
   prev_hash: string;
-  transactions: unknown[];
+  transactions: TxFields[];
   state_root: string;
   hash: string;
 }
@@ -49,6 +64,7 @@ export const rpc = {
   account: (address: string) => get<Account>(`/account/${address}`),
   history: (address: string) => get<HistoryResponse>(`/history/${address}`),
   chain: () => get<ChainResponse>("/chain"),
+  block: (index: number) => get<Block>(`/block/${index}`),
 
   async sendTx(tx: {
     from: string;
