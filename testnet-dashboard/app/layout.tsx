@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { AppShell } from "@/components/shell/AppShell";
+import { CHAIN_NAME } from "@/lib/chain-config";
 import "./globals.css";
 
 const displayFont = Space_Grotesk({
@@ -15,8 +17,8 @@ const monoFont = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Testnet Explorer",
-  description: "Live dashboard for the l1_node testnet",
+  title: CHAIN_NAME,
+  description: `Explorer, faucet, and wallet for ${CHAIN_NAME}`,
 };
 
 export default function RootLayout({
@@ -29,7 +31,9 @@ export default function RootLayout({
       lang="en"
       className={`${displayFont.variable} ${monoFont.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full bg-background text-foreground">
+        <AppShell>{children}</AppShell>
+      </body>
     </html>
   );
 }
