@@ -14,8 +14,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           <main className="flex-1">{children}</main>
           <footer className="border-t border-border px-4 py-4 md:px-8">
             <p className="font-mono text-[11px] text-muted truncate">
-              Connected to {RPC_URL}
-            </p>
+  Built by mecozx.
+</p>
           </footer>
         </div>
       </div>
